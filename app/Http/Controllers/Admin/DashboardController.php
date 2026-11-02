@@ -129,6 +129,12 @@ public function storeStockMovement(StockMovementRequest $request)
         $cre = $request->validated();
 
         if (Auth::attempt($cre)) {
+            if(!Auth::user()->is_active){
+                Auth::logout();
+              return back()->withErrors([
+            'email' => 'Votre compte a été desactivé.'
+        ])->onlyInput('email');
+            }
             $request->session()->regenerate();
             return redirect()->intended(route('admin.dashboard'));
         }

@@ -22,7 +22,7 @@ Route::delete('/logout', [DashboardController::class, 'logout'])
     ->name('logout');
 
 // Espace admin : connexion obligatoire
-Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth','active'])->group(function () {
 
     // Routes accessibles aux administrateurs et gestionnaires
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
